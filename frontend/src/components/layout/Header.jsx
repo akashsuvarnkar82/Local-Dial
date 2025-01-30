@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,43 +21,79 @@ const Header = () => {
   }, [images.length]);
 
   return (
-    <header className="bg-white text-gray-800 rounded-lg py-8 shadow-lg w-full">
-      {/* Title Section */}
-      <h1 className="text-3xl font-extrabold text-center text-blue-600">
+    <header className="bg-white text-black-900 py-8 rounded-lg shadow-lg w-full">
+      <h1 className="text-4xl font-extrabold text-center">
         Connecting You to Trusted Local Services, Anytime, Anywhere!
       </h1>
-      <p className="text-lg text-center text-gray-600 mt-2">
+      <p className="text-lg text-center">
         Find and connect with the best local businesses in your area. Support
         local, thrive together.
       </p>
 
-      {/* Advertisement Slideshow */}
+      {/* Main Content Section */}
       <div className="container mx-auto px-4 mt-8">
-        <div className="flex justify-center">
-          <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden">
-            {/* Image Container */}
-            <div className="h-64 overflow-hidden relative">
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          {/* Slideshow Section */}
+          <div className="w-full lg:w-1/2 bg-white rounded-lg shadow-lg">
+            <div className="h-64 overflow-hidden relative rounded-lg">
               <img
                 src={images[currentIndex]}
                 alt={`Advertisement ${currentIndex + 1}`}
                 className="w-full h-full object-cover rounded-lg transition-all duration-500 ease-in-out"
               />
-              {/* Optional Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-4">
-                <h3 className="text-lg text-white font-bold">
-                  {/* Ad {currentIndex + 1} */}
-                </h3>
-              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="mt-8 text-center">
-        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg font-bold hover:bg-blue-700 transition-all">
-          Explore More
-        </button>
+          {/* Cards Section */}
+          <div className="flex flex-1 gap-4 justify-between">
+            {/* Card 1 */}
+            <Link to="/category/hotels" className="w-full">
+              <div className="bg-white shadow-md rounded-lg p-4 h-64 flex flex-col justify-between items-center group hover:shadow-xl transition-shadow duration-300">
+                <img
+                  src="/src/assets/hotels.png"
+                  alt="Hotels"
+                  className="w-full h-40 object-cover rounded-lg transition-transform duration-300 transform group-hover:-translate-y-2"
+                />
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold mt-2">Hotels</h3>
+                  <p className="text-sm text-gray-600">
+                    Find the best offers in your area
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 2 */}
+            <Link to="/category/hospitals" className="w-full">
+              <div className="bg-white shadow-md rounded-lg p-4 h-64 flex flex-col justify-between items-center group hover:shadow-xl transition-shadow duration-300">
+                <img
+                  src="/src/assets/hospitals.png"
+                  alt="Hospitals"
+                  className="w-full h-40 object-cover rounded-lg transition-transform duration-300 transform group-hover:-translate-y-2"
+                />
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold mt-2">Hospitals</h3>
+                  <p className="text-sm text-gray-600">Explore trusted service.</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 3 */}
+            <Link to="/category/gym" className="w-full">
+              <div className="bg-white shadow-md rounded-lg p-4 h-64 flex flex-col justify-between items-center group hover:shadow-xl transition-shadow duration-300">
+                <img
+                  src="/src/assets/Gym.png"
+                  alt="GYM"
+                  className="w-full h-40 object-cover rounded-lg transition-transform duration-300 transform group-hover:-translate-y-2"
+                />
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold mt-2">GYM</h3>
+                  <p className="text-sm text-gray-600">Local businesses.</p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );

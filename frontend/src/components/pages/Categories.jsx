@@ -44,10 +44,10 @@ const Categories = () => {
           {categories.map((category, index) => (
             <div
               key={index}
-              className="bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition duration-300"
+              className="bg-white p-4 rounded-lg shadow-md hover:bg-white-200 transition duration-300"
             >
               <Link to={category.link} className="block">
-                <div className="w-full h-40 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden mb-4">
+                <div className="w-full h-40 flex items-center justify-center bg-white rounded-lg overflow-hidden mb-4">
                   <img
                     src={category.image}
                     alt={category.name}

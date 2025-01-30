@@ -1,113 +1,91 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
-// import logo from "../../assets/logo2.png";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ onCategoryChange, onFilter }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleCategoryChange = (event) => {
-    const category = event.target.value;
+  const categories = [
+    "All Categories",
+    "Grocery Shops",
+    "Hospitals",
+    "Gyms",
+    "Restaurants",
+    "Hotels",
+    "Pharmacies",
+  ];
+
+  const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+    setIsDropdownOpen(false);
+
+    if (category !== "All Categories") {
+      navigate(`/category/${category.toLowerCase().replace(/\s+/g, "-")}`);
+    }
 
     if (onCategoryChange) {
-      onCategoryChange(category); // Call only if the function is provided
-    } else {
-      console.warn("onCategoryChange is not provided as a prop.");
+      onCategoryChange(category);
     }
   };
 
   const handleSearch = () => {
     if (onFilter) {
-      onFilter({ searchQuery, selectedCategory }); // Call only if the function is provided
-    } else {
-      console.warn("onFilter is not provided as a prop.");
+      onFilter({ searchQuery, selectedCategory });
     }
   };
 
   return (
-    <nav className="bg-black text-white text-wh shadow-lg">
+    <nav className="bg-black text-white shadow-lg">
       <div className="container mx-auto flex flex-wrap items-center justify-between px-6 py-4">
         {/* Logo */}
         <div className="flex items-center mb-4 md:mb-0 border-2 border-gray-300 p-2 rounded-lg cursor-pointer hover:scale-105 hover:border-blue-500 transition-all duration-200 ease-in-out">
           <span className="text-3xl font-bold font-serif">Local</span>
-          <span className="text-3xl font-bold text-blue-400 font-sans sm:font-serif md:font-mono lg:font-sans xl:font-serif">Dial</span>
+          <span className="text-3xl font-bold text-blue-400 font-sans">Dial</span>
         </div>
 
-        {/* Spacer for separation */}
-        <div className="flex-grow"></div> {/* Ensures spacing between Logo and Search Bar */}
+        <div className="flex-grow"></div>
 
-        {/* Search Bar */}
-        <div className="flex items-center space-x-2">
+        {/* Dropdown Input */}
+        <div className="relative w-64">
           <input
             type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="px-4 text-black py-2 w-48 md:w-64 border border-blue-400 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-3 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 cursor-pointer"
+            placeholder="Select Category"
+            value={selectedCategory}
+            readOnly
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
           />
-          <button
-            className=" bg-blue-400 text-white px-4 py-2 rounded-r-lg hover:bg-blue-400 transition duration-400"
-            onClick={handleSearch}
-          >
-            Search
-          </button>
+          {isDropdownOpen && (
+            <div className="absolute z-20 bg-white border text-black rounded-lg mt-1 w-full shadow-xl overflow-hidden transition-all duration-300">
+              {categories.map((category, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white transition-all duration-200"
+                  onClick={() => handleCategorySelect(category)}
+                >
+                  {category}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Category Dropdown */}
-        <select
-          className="ml-4 px-4 py-2 bg-blue-400 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option value="All">All Categories</option>
-          <option value="Grocery Shops">Grocery Shops</option>
-          <option value="Hospitals">Hospitals</option>
-          <option value="Gyms">Gyms</option>
-          <option value="Restaurants">Restaurants</option>
-          <option value="Hotels">Hotels</option>
-          <option value="Pharmacies">Pharmacies</option>
-        </select>
-
-        {/* Spacer between Dropdown and Navigation Links */}
-        <div className="ml-6"></div> {/* Add a margin for spacing */}
+        <div className="ml-6"></div>
 
         {/* Navigation Links */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link
-            to="/home"
-            className="hover:text-white transition duration-400 no-underline"
-          >
-            Home
-          </Link>
-          <Link
-            to="/aboutus"
-            className="hover:text-white transition duration-400 no-underline"
-          >
-            About Us
-          </Link>
-          <Link
-            to="/services"
-            className="hover:text-white transition duration-400 no-underline"
-          >
-            Services
-          </Link>
-          <Link
-            to="/addform"
-            className="hover:text-white transition duration-400 no-underline"
-          >
-            AddYourServices
-          </Link>
+        <div className="text-lg hidden md:flex items-center space-x-6">
+          <Link to="/home" className="hover:text-orange-200 transition duration-300">Home</Link>
+          <Link to="/aboutus" className="hover:text-orange-200 transition duration-300">About Us</Link>
+          <Link to="/services" className="hover:text-orange-200 transition duration-300">Services</Link>
+          <Link to="/login" className="hover:text-orange-200 transition duration-300">Add Your Services</Link>
         </div>
 
         {/* Sign Up Button */}
         <div className="ml-4">
-          <Link
-            to="/register"
-            className="px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-400 transition duration-400 shadow-md no-underline"
-          >
-            Login/Sign Up
+          <Link to="/register" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-orange-400 transition duration-300 shadow-md">
+            Sign Up/Login
           </Link>
         </div>
       </div>

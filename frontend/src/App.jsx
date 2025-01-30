@@ -11,6 +11,7 @@ import Login from "./components/pages/Login";
 import ResetPassword from "./components/pages/ResetPassword";
 import Services from "./components/pages/Services";
 import BusinessCard from "./components/layout/BusinessCard";
+import CategoryDetailPage from "./components/pages/categoryDetailPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/category/:category" element={<CategoryDetailPage />} />
             <Route path="/addform" element={<AddBusinessForm />} />
             <Route path="/businesscard" element={<BusinessCard />} />
             <Route path="/services" element={<Services />} />
